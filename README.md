@@ -1,5 +1,7 @@
 # BenBristow.EntityFrameworkCore.Pagination
 
+[![Build/Test/Publish](https://github.com/benbristow/EntityFrameworkCore.Pagination/actions/workflows/cicd.yml/badge.svg)](https://github.com/benbristow/EntityFrameworkCore.Pagination/actions/workflows/cicd.yml)
+
 This library provides an easy-to-use extension for paginating `IQueryable<T>` objects in Entity Framework Core, allowing
 for efficient, dynamic pagination of database queries.
 
