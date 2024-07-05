@@ -35,6 +35,7 @@ public sealed class QueryableExtensionsTests
         results.TotalCount.Should().Be(100);
         results.Page.Should().Be(1);
         results.PageCount.Should().Be(10);
+        results.PageSize.Should().Be(10);
         results.Results.Select(t => t.Id).Should().BeEquivalentTo(Enumerable.Range(1, 10));
     }
 
@@ -54,6 +55,7 @@ public sealed class QueryableExtensionsTests
         results.TotalCount.Should().Be(100);
         results.Page.Should().Be(2);
         results.PageCount.Should().Be(10);
+        results.PageSize.Should().Be(10);
         results.Results.Select(t => t.Id).Should().BeEquivalentTo(Enumerable.Range(11, 10));
     }
 
@@ -73,6 +75,7 @@ public sealed class QueryableExtensionsTests
         results.TotalCount.Should().Be(100);
         results.Page.Should().Be(11);
         results.PageCount.Should().Be(10);
+        results.PageSize.Should().Be(10);
     }
 
     [Fact]
@@ -84,13 +87,14 @@ public sealed class QueryableExtensionsTests
         // Act
         var results = await _context.TestEntities
             .OrderBy(t => t.Id)
-            .ToPaginationResultAsync();
+            .ToPaginationResultAsync(pageSize: null);
 
         // Assert
         results.Results.Should().HaveCount(100);
         results.TotalCount.Should().Be(100);
         results.Page.Should().Be(1);
         results.PageCount.Should().Be(1);
+        results.PageSize.Should().BeNull();
     }
 
     private async Task SeedDatabaseAsync()
