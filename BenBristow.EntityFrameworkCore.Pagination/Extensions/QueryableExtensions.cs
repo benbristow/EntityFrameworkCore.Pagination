@@ -46,6 +46,7 @@ public static class QueryableExtensions
             TotalCount = count,
             Page = page,
             PageCount = pageCount,
+            PageSize = pageSize,
         };
     }
 
@@ -62,6 +63,7 @@ public static class QueryableExtensions
             TotalCount = allResults.Count,
             Page = 1,
             PageCount = 1,
+            PageSize = null,
         };
     }
 }
