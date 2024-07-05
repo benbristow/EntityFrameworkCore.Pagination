@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <Title>BenBristow.EntityFrameworkCore.Pagination</Title>
         <Authors>Ben Bristow</Authors>
         <Description>Basic drop-in Entity Famework Core pagination implementation</Description>
@@ -13,7 +14,7 @@
         <PackageProjectUrl>https://github.com/benbristow/EntityFrameworkCore.Pagination</PackageProjectUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <LangVersion>default</LangVersion>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
     </PropertyGroup>
 
     <ItemGroup>
