@@ -44,7 +44,7 @@ public static class QueryableExtensions
         {
             Results = results,
             TotalCount = count,
-            Page = page,
+            Page = page > pageCount ? pageCount : page,
             PageCount = pageCount < 1 ? 1 : pageCount,
             PageSize = pageSize,
         };
