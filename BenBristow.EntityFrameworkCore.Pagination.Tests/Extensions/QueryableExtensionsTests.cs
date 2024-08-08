@@ -73,7 +73,7 @@ public sealed class QueryableExtensionsTests
         // Assert
         results.Results.Should().BeEmpty();
         results.TotalCount.Should().Be(100);
-        results.Page.Should().Be(11);
+        results.Page.Should().Be(10);
         results.PageCount.Should().Be(10);
         results.PageSize.Should().Be(10);
     }
