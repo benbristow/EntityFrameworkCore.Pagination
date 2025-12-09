@@ -1,17 +1,12 @@
+using System.Collections;
+
 namespace BenBristow.EntityFrameworkCore.Pagination.Models;
 
 /// <summary>
-/// Represents a paginated result set of items of type T.
+/// Non-generic base class for paginated result sets. Useful as a Razor Pages model.
 /// </summary>
-/// <typeparam name="T">The type of items in the result set.</typeparam>
-public class PaginationResult<T>
-    where T : class
+public abstract class PaginationResult
 {
-    /// <summary>
-    /// The collection of items for the current page.
-    /// </summary>
-    public required ICollection<T> Results { get; init; }
-
     /// <summary>
     /// The total count of items across all pages.
     /// </summary>
@@ -31,4 +26,25 @@ public class PaginationResult<T>
     /// The total number of pages.
     /// </summary>
     public required int PageCount { get; init; }
+
+    /// <summary>
+    /// Non-generic access to the current page results.
+    /// </summary>
+    public abstract ICollection ResultsUntyped { get; }
+}
+
+/// <summary>
+/// Represents a paginated result set of items of type T.
+/// </summary>
+/// <typeparam name="T">The type of items in the result set.</typeparam>
+public class PaginationResult<T> : PaginationResult
+    where T : class
+{
+    /// <summary>
+    /// The collection of items for the current page.
+    /// </summary>
+    public required ICollection<T> Results { get; init; }
+
+    /// <inheritdoc />
+    public override ICollection ResultsUntyped => (ICollection)Results;
 }

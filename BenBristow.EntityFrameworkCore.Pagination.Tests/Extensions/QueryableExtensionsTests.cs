@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using BenBristow.EntityFrameworkCore.Pagination.Extensions;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -214,5 +215,6 @@ public sealed class TestDto
 
 public sealed class TestDbContext(DbContextOptions<TestDbContext> options) : DbContext(options)
 {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public DbSet<TestEntity> TestEntities { get; init; }
 }
