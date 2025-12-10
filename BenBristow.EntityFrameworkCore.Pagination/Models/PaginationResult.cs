@@ -47,4 +47,21 @@ public class PaginationResult<T> : PaginationResult
 
     /// <inheritdoc />
     public override ICollection ResultsUntyped => (ICollection)Results;
+
+    /// <summary>
+    /// Creates an empty pagination result with no items.
+    /// </summary>
+    /// <param name="pageSize">The number of items per page.</param>
+    /// <returns>An empty <see cref="PaginationResult{T}"/> instance.</returns>
+    public static PaginationResult<T> Empty(int? pageSize = null)
+    {
+        return new PaginationResult<T>
+        {
+            Results = Array.Empty<T>(),
+            TotalCount = 0,
+            Page = 1,
+            PageCount = 1,
+            PageSize = pageSize
+        };
+    }
 }

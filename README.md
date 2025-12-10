@@ -77,6 +77,34 @@ Paginates the source `IQueryable<TSource>` and projects the results to `TResult`
 
 A `Task<PaginationResult<TResult>>` representing the asynchronous operation, containing the paginated and projected results.
 
+### `PaginationResult<T>.Empty(...)`
+
+Creates an empty `PaginationResult<T>` with sensible defaults. Useful when there are no results to display (e.g., an empty search) and you still want to return a valid pagination shape without performing a query.
+
+#### Parameters
+
+- `pageSize` (optional): The number of items per page. If provided, `PageSize` is set to this value; if omitted, `PageSize` is `null`.
+
+#### Returns
+
+An empty `PaginationResult<T>` with the following defaults:
+
+- `Results`: empty collection
+- `TotalCount`: `0`
+- `Page`: `1`
+- `PageCount`: `1`
+- `PageSize`: `null` (or the supplied `pageSize`)
+
+#### Example
+
+```csharp
+// Return an empty result (no page size)
+return PaginationResult<MyDto>.Empty();
+
+// Return an empty result but preserve a desired page size in the response
+return PaginationResult<MyDto>.Empty(pageSize: 25);
+```
+
 ## Example
 
 ```csharp
