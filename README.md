@@ -159,4 +159,4 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 
 ## License
 
-This project is licenced under the GPL v3 or later license.
+This project is licenced under the GNU GPL v3 or later license.

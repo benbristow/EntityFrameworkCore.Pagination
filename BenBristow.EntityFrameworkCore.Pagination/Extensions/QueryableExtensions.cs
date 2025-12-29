@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BenBristow.EntityFrameworkCore.Pagination.Extensions;
 
+/// <summary>
+/// Provides extension methods for IQueryable to support pagination functionality.
+/// </summary>
 public static class QueryableExtensions
 {
     /// <summary>
@@ -66,8 +69,9 @@ public static class QueryableExtensions
         [DisallowNull] int? pageSize,
         CancellationToken cancellationToken) where T : class
     {
-        var count = await source.CountAsync(cancellationToken);
-        var results = await source.Skip((page - 1) * pageSize.Value).Take(pageSize.Value).ToListAsync(cancellationToken);
+        var count = await source.AsNoTracking().CountAsync(cancellationToken);
+        var results = await GetResultsQuery(source: source.AsNoTracking(), page: page, pageSize: pageSize.Value, totalCount: count)
+            .ToListAsync(cancellationToken);
         var pageCount = (int)Math.Ceiling(count / (double)pageSize.Value);
 
         return new PaginationResult<T>
@@ -89,8 +93,8 @@ public static class QueryableExtensions
         where TSource : class
         where TResult : class
     {
-        var count = await source.CountAsync(cancellationToken);
-        var results = await source.Skip((page - 1) * pageSize.Value).Take(pageSize.Value)
+        var count = await source.AsNoTracking().CountAsync(cancellationToken);
+        var results = await GetResultsQuery(source: source.AsNoTracking(), page: page, pageSize: pageSize.Value, totalCount: count)
             .Select(projection)
             .ToListAsync(cancellationToken);
         var pageCount = (int)Math.Ceiling(count / (double)pageSize.Value);
@@ -110,7 +114,7 @@ public static class QueryableExtensions
         CancellationToken cancellationToken)
         where T : class
     {
-        var allResults = await source.ToListAsync(cancellationToken);
+        var allResults = await source.AsNoTracking().ToListAsync(cancellationToken);
 
         return new PaginationResult<T>
         {
@@ -129,7 +133,7 @@ public static class QueryableExtensions
         where TSource : class
         where TResult : class
     {
-        var allResults = await source.Select(projection).ToListAsync(cancellationToken);
+        var allResults = await source.AsNoTracking().Select(projection).ToListAsync(cancellationToken);
 
         return new PaginationResult<TResult>
         {
@@ -139,5 +143,13 @@ public static class QueryableExtensions
             PageCount = 1,
             PageSize = null,
         };
+    }
+
+    private static IQueryable<T> GetResultsQuery<T>(IQueryable<T> source, int page, int pageSize, int totalCount)
+    {
+        var resultsQuery = source.AsQueryable();
+        if (totalCount >= pageSize) // Only apply pagination if there are enough results
+            resultsQuery = resultsQuery.Skip((page - 1) * pageSize).Take(pageSize);
+        return resultsQuery;
     }
 }
